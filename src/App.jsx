@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import {v4 as uuid} from 'uuid'
 import List from './components/List'
 import store from './store'
 import StoreApi from './store.Api'
@@ -7,9 +7,26 @@ import StoreApi from './store.Api'
 const App = () => {
     const [data, setData] = useState(store)
 
-    const addNewCard = (content) => {
-        console.log(content)
-    }
+    const addNewCard = (content, listId) => {
+        const newCardId = uuid();
+        
+        const newCard = {
+            id: newCardId, 
+            content,
+        }
+
+        const list = data.lists[listId]
+        list.cards = [...list.cards, newCard]
+
+        const newDataState = {
+            ...data,
+            lists: {
+                ...data.lists, 
+                [listId]: list,
+            },
+        }
+        setData(newDataState)
+    };
 
     return(
         <StoreApi.Provider value={{ addNewCard }}>

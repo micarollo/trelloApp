@@ -2,7 +2,6 @@ import React, {useState , useContext} from 'react';
 import Paper from '@material-ui/core/Paper'
 import { Button, IconButton, InputBase } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
-import data from '../../store'
 import storeApi from '../../store.Api'
 
 const inputCardStyle = {
@@ -20,17 +19,17 @@ const inputCardStyle = {
     },
 }
 
-const InputCard = ({setOpen}) => {
+const InputCard = ({setOpen, listId}) => {
     const {addNewCard} = useContext(storeApi)
     const [inputText, setInputText] = useState('')
 
-    const handleButtonConfirm = () => {
-        addNewCard(inputText)
-        setOpen(false)
-    }
-
     const handleOnChange = (e) => {
         setInputText(e.target.value)
+    }
+
+    const handleButtonConfirm = (e) => {
+        addNewCard(inputText, listId)
+        setOpen(false)
     }
 
     return(
@@ -40,13 +39,13 @@ const InputCard = ({setOpen}) => {
                 onChange={handleOnChange}
                 style={inputCardStyle.input}
                 placeholder="Enter a title of this card"
-                onBlur={()=> setOpen(false)}
+                value={inputText}
                 ></InputBase>
             </Paper>
             <>
                 <Button 
                 style={inputCardStyle.btnConfirm}
-                onClick={handleButtonConfirm}
+                onClick={() => handleButtonConfirm()}
                 >Add Card</Button>
                 <IconButton
                 onClick={() => setOpen(false)}>

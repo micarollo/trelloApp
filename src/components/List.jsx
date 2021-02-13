@@ -20,7 +20,7 @@ const List = ({list}) => {
               <TrelloCard key={card.id} card={card}></TrelloCard>
           ))}
           
-          <InputContainer></InputContainer>
+          <InputContainer listId={list.id}></InputContainer>
       </div>
 
     )

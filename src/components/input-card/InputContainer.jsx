@@ -12,12 +12,12 @@ const addCardStyle = {
     },
 }
 
-const InputContainer = () => {
+const InputContainer = ( {listId} ) => {
     const [open, setOpen] = useState(false)
     return(
         <>
         {open ? (
-        <InputCard setOpen={setOpen}></InputCard>
+        <InputCard setOpen={setOpen} listId={listId}></InputCard>
         ) : (
         <Typography 
         style={addCardStyle.addCard} 
