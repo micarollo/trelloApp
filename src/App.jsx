@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import {v4 as uuid} from 'uuid'
+import InputContainerNewList from './components/InputContainerNewList';
+import InputContainer from './components/input-card/InputContainer'
 import List from './components/List'
 import store from './store'
 import StoreApi from './store.Api'
+
+const addStyle = {
+    app: {
+        display: "flex",
+    }
+}
+
 
 const App = () => {
     const [data, setData] = useState(store)
@@ -28,13 +37,36 @@ const App = () => {
         setData(newDataState)
     };
 
+    const addNewList = (title) => {
+        const newListId = uuid();
+
+        const newList = {
+            id: newListId,
+            title,
+            cards: [],
+        };
+
+        
+        const newListState = {
+            lists: {
+                ...data.lists,
+                [newListId] : newList
+            },
+            listsIds: [...data.listsIds, newListId]
+        };
+
+        setData(newListState);
+
+    }
+
     return(
-        <StoreApi.Provider value={{ addNewCard }}>
-        <div>
+        <StoreApi.Provider value={{ addNewCard , addNewList}}>
+        <div style={addStyle.app}>
             {data.listsIds.map((listsIds) => {
                 const list = data.lists[listsIds];
                 return <List list={list} key={listsIds}/>
             })}
+            <InputContainerNewList type="list"></InputContainerNewList>
         </div>
         </StoreApi.Provider>
     )
@@ -44,19 +76,3 @@ export default App
 
 
 
-{/* class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {  };
-    }
-    render() {
-        return (
-            <>
-                <h1>To do</h1>
-                 <List title="list"/>
-            </>
-        );
-    }
-}
-
-export default App;  */}

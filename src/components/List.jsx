@@ -9,6 +9,7 @@ const styles = {
         borderRadius: 3,
         width: 300,
         padding: 8,
+        marginRight: ".5rem",
     }
 }
 
@@ -20,7 +21,7 @@ const List = ({list}) => {
               <TrelloCard key={card.id} card={card}></TrelloCard>
           ))}
           
-          <InputContainer listId={list.id}></InputContainer>
+          <InputContainer listId={list.id} type="card"></InputContainer>
       </div>
 
     )

@@ -19,8 +19,8 @@ const inputCardStyle = {
     },
 }
 
-const InputCard = ({setOpen, listId}) => {
-    const {addNewCard} = useContext(storeApi)
+const InputCard = ({setOpen, listId , type}) => {
+    const {addNewCard , addNewList} = useContext(storeApi)
     const [inputText, setInputText] = useState('')
 
     const handleOnChange = (e) => {
@@ -28,8 +28,14 @@ const InputCard = ({setOpen, listId}) => {
     }
 
     const handleButtonConfirm = (e) => {
-        addNewCard(inputText, listId)
-        setOpen(false)
+        if(type === 'card') {
+            addNewCard(inputText, listId)
+            setOpen(false)
+        }else{
+            addNewList(inputText)
+            setOpen(false)
+        }
+        
     }
 
     return(
@@ -38,15 +44,20 @@ const InputCard = ({setOpen, listId}) => {
                 <InputBase
                 onChange={handleOnChange}
                 style={inputCardStyle.input}
-                placeholder="Enter a title of this card"
+                placeholder={type === 'card' 
+                ?"Enter card content"
+                :"Enter title list"}
                 value={inputText}
                 ></InputBase>
             </Paper>
             <>
                 <Button 
                 style={inputCardStyle.btnConfirm}
-                onClick={() => handleButtonConfirm()}
-                >Add Card</Button>
+                onClick={() => handleButtonConfirm()}>
+                {type === 'card'
+                ?"Add Card"
+                :"Add List"}
+                </Button>
                 <IconButton
                 onClick={() => setOpen(false)}>
                     <ClearIcon></ClearIcon>
