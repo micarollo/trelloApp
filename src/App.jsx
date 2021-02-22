@@ -59,8 +59,23 @@ const App = () => {
 
     }
 
+    const changeTitle = (title, listId) => {
+        const list = data.lists[listId]
+        list.title = title
+
+        const newState = {
+            ...data,
+            lists:{
+                ...data.lists,
+                [listId] : list,
+            },
+        }
+
+        setData(newState)
+    }
+
     return(
-        <StoreApi.Provider value={{ addNewCard , addNewList}}>
+        <StoreApi.Provider value={{ addNewCard , addNewList , changeTitle}}>
         <div style={addStyle.app}>
             {data.listsIds.map((listsIds) => {
                 const list = data.lists[listsIds];

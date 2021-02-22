@@ -16,7 +16,7 @@ const styles = {
 const List = ({list}) => {
     return(
       <div style={styles.container}>
-          <Title title={list.title}></Title>
+          <Title title={list.title} listId={list.id}></Title>
           {list.cards.map((card) => (
               <TrelloCard key={card.id} card={card}></TrelloCard>
           ))}
