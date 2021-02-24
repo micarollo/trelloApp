@@ -1,5 +1,6 @@
 import React, {useContext, useState} from 'react';
 import { Typography, InputBase } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import storeApi from '../store.Api'
 
@@ -25,7 +26,8 @@ const Title = ({title, listId}) => {
     const [open, setOpen] = useState()
     const [newTitle, setNewTitle] = useState(title)
     const { changeTitle } = useContext(storeApi);
-    
+    const { deleteList } = useContext(storeApi);
+
     const handleOnChange = (e) => {
         setNewTitle(e.target.value)
     }
@@ -33,6 +35,10 @@ const Title = ({title, listId}) => {
     const handleOnBlur = () => {
         changeTitle(newTitle, listId)
         setOpen(false);
+    }
+
+    const handleOnClick = (e) => {
+        deleteList(listId)
     }
 
     return(
@@ -49,7 +55,11 @@ const Title = ({title, listId}) => {
             ) : (
             <div style={titleStyle.editableTitle}>
                 <Typography style={titleStyle.title} onClick={()=> setOpen(!open)}>{title}</Typography>
-                <MoreHorizIcon/>
+                {/* <MoreHorizIcon/> */}
+                <DeleteIcon
+                onClick={handleOnClick}
+                />
+                
             </div>
             )}
         </>

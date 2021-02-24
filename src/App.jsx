@@ -74,8 +74,26 @@ const App = () => {
         setData(newState)
     }
 
+    const deleteList = (listId) => {
+        
+        let newState = {
+            lists: {
+                ...data.lists,
+            },
+            listsIds: [...data.listsIds]
+        };
+        delete newState.lists[listId]
+
+        newState.listsIds = newState.listsIds.filter(item => item!=listId)
+        
+        setData(newState)
+
+        // console.log(newState)
+        
+    }
+
     return(
-        <StoreApi.Provider value={{ addNewCard , addNewList , changeTitle}}>
+        <StoreApi.Provider value={{ addNewCard , addNewList , changeTitle , deleteList}}>
         <div style={addStyle.app}>
             {data.listsIds.map((listsIds) => {
                 const list = data.lists[listsIds];
