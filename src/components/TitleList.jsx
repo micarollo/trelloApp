@@ -1,7 +1,6 @@
 import React, {useContext, useState} from 'react';
 import { Typography, InputBase } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import storeApi from '../store.Api'
 
 const titleStyle = {
@@ -55,7 +54,6 @@ const Title = ({title, listId}) => {
             ) : (
             <div style={titleStyle.editableTitle}>
                 <Typography style={titleStyle.title} onClick={()=> setOpen(!open)}>{title}</Typography>
-                {/* <MoreHorizIcon/> */}
                 <DeleteIcon
                 onClick={handleOnClick}
                 />

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {v4 as uuid} from 'uuid'
 import InputContainerNewList from './components/InputContainerNewList';
-import InputContainer from './components/input-card/InputContainer'
 import List from './components/List'
 import store from './store'
 import StoreApi from './store.Api'
@@ -77,6 +76,7 @@ const App = () => {
     const deleteList = (listId) => {
         
         let newState = {
+            
             lists: {
                 ...data.lists,
             },
@@ -84,16 +84,31 @@ const App = () => {
         };
         delete newState.lists[listId]
 
-        newState.listsIds = newState.listsIds.filter(item => item!=listId)
+        newState.listsIds = newState.listsIds.filter(item => item!==listId)
         
         setData(newState)
 
-        // console.log(newState)
         
     }
 
+    const deleteCard = (cardId, listId) => {
+        
+        let newState = {
+            
+            lists: {
+                ...data.lists,
+            },
+            listsIds: [...data.listsIds]
+        };
+        
+        newState.lists[listId].cards = newState.lists[listId].cards.filter(card => card.id!==cardId)
+
+        
+        setData(newState)
+    }
+
     return(
-        <StoreApi.Provider value={{ addNewCard , addNewList , changeTitle , deleteList}}>
+        <StoreApi.Provider value={{ addNewCard , addNewList , changeTitle , deleteList , deleteCard}}>
         <div style={addStyle.app}>
             {data.listsIds.map((listsIds) => {
                 const list = data.lists[listsIds];

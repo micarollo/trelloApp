@@ -18,7 +18,7 @@ const List = ({list}) => {
       <div style={styles.container}>
           <Title title={list.title} listId={list.id}></Title>
           {list.cards.map((card) => (
-              <TrelloCard key={card.id} card={card}></TrelloCard>
+              <TrelloCard key={card.id} card={card} cardId={card.id} listId={list.id}></TrelloCard>
           ))}
           
           <InputContainer listId={list.id} type="card"></InputContainer>
