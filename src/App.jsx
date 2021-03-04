@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { DragDropContext } from 'react-beautiful-dnd';
 import {v4 as uuid} from 'uuid'
 import InputContainerNewList from './components/InputContainerNewList';
 import List from './components/List'
@@ -107,8 +108,37 @@ const App = () => {
         setData(newState)
     }
 
+    const onDragEnd = (result) => {
+        const { destination, source,  draggableId } = result;
+
+        if(!destination){
+            return;
+        }
+
+        const sourceList = data.lists[source.droppableId]
+        const destinationList = data.lists[destination.droppableId]
+        const dragCard = sourceList.cards.filter(
+            (card) => card.id == draggableId
+        )[0];
+
+        if (source.droppableId == destination.droppableId) {
+            sourceList.cards.splice(source.index, 1)
+            destinationList.cards.splice(destination.index, 0, dragCard)
+        
+            const newState = {
+                ...data, 
+                lists: {
+                    ...data.lists,
+                    [sourceList.id] : destinationList,
+                },
+            };
+            setData(newState)
+        }
+    }
+
     return(
         <StoreApi.Provider value={{ addNewCard , addNewList , changeTitle , deleteList , deleteCard}}>
+        <DragDropContext onDragEnd={onDragEnd}>
         <div style={addStyle.app}>
             {data.listsIds.map((listsIds) => {
                 const list = data.lists[listsIds];
@@ -116,6 +146,7 @@ const App = () => {
             })}
             <InputContainerNewList type="list"></InputContainerNewList>
         </div>
+        </DragDropContext>
         </StoreApi.Provider>
     )
 };
