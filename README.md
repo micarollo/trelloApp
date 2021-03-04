@@ -8,3 +8,4 @@
 6. Eliminar lista
 7. Eliminar card
 8. Drag and drop en la misma lista
+9. Drag and drop en diferentes listas

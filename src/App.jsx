@@ -133,6 +133,19 @@ const App = () => {
                 },
             };
             setData(newState)
+        }else{
+            sourceList.cards.splice(source.index, 1)
+            destinationList.cards.splice(destination.index, 0, dragCard)
+
+            const newState = {
+                ...data, 
+                lists: {
+                    ...data.lists, 
+                    [sourceList.id] : sourceList,
+                    [destinationList.id] : destinationList,
+                }
+            }
+            setData(newState)
         }
     }
 
